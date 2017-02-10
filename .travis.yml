@@ -1,14 +1,44 @@
 sudo: false
 language: cpp
-
-install: 
-  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | tar -zxvf- -C ./
-  - export PATH=$PATH:$PWD
-  - echo $PATH
-  - echo $HOME
+install:
+- curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | tar -zxvf-
+  -C ./
+- export PATH=$PATH:$PWD
+- echo $PATH
+- echo $HOME
 env:
+  matrix:
   - JOB=ONE
   - JOB=TWO
- 
+  global:
+    secure: V2oxDG75drbQe//SLSclfLg9HUQ8MLGISZL74sa1YwvA8RJMQpFGLhJ43lDsRWEsfBzbJ4JBAvIuvpCSnx/mZlNZJ+9m2gQREWizXR91474JfgFAMwuOYNSYkeoe51ToZSS5sh45awidIga4wenI3bH+OnC3A9p/BcGMhlJJmxTnxl0gu/VoQkkOPyqjTEjrtbKcEbkzQ6WucV+NjbfVyRshvp0tvItxvNgp6XvKeBxLu+Q1y80BSPZN7Qxk0BWjlAl7k1bdYwln67zTT8H/NakVm328sflcoXJhLtRixUhYON0JBrAFeDYY2hlP2WB8mqRU+dPZVWBhhk5UW2VIgYuK7C1GkOdOtYZDds/wkl5Jro4+I+Gnv4sh6cpT67QPr8hHmI1yOKLQJs2F670b8plzTRbCRJRgARahffJPNxx5cAY36PXS10LroICjRd1aT9pKo9D/AUGkRrTjjr0JZbhIMOiZ2hv8KZhKYSmAQD2MnldY0dPyuHGvli+wO6zBlCKWGXJ7pre2al+lgm8wUxUKSKQog7ItPSxI3pln+xagobm8XDlTSuIKU1t7QzMeRmKOdxL1Bdv2f4YzdmCQ5NT9wU2XXpRq+keH7G6dZ1+gj4vse9YQHdkrlJ5ygSV3ywn8WfDUKfgcz9UwZgHEp8p2mRGfU3YqsOq6ITBgjnM=
+
+#script:
+# - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
+
 script:
-  - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Bld.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
+  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+after_success:
+  - python travis_after_all.py https://api.travis-ci.com
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+          echo "All jobs succeeded! PUBLISHING..."
+        else
+          echo "Some jobs failed"
+        fi
+      fi
+after_failure:
+  - python travis_after_all.py https://api.travis-ci.com
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
+          echo "All jobs failed"
+        else
+          echo "Some jobs failed"
+        fi
+      fi
+after_script:
+  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
