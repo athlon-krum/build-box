@@ -2,14 +2,13 @@ sudo: false
 language: cpp
 
 install: 
-#  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | tar -zxvf- -C ./
   - export PATH=$PATH:$PWD
-  
-  - testspace --version
   - echo $PATH
   - echo $HOME
-  
-# $TRAVIS_JOB_NUMBER  
+env:
+  - JOB=ONE
+  - JOB=TWO
+ 
 script:
-  - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
+  - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Bld.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
