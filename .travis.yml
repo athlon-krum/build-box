@@ -1,0 +1,5 @@
+install: 
+  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
+  - testspace --version
+  - echo $PATH
+  - echo $HOME
