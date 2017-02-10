@@ -1,5 +1,10 @@
+language: cpp
+
 install: 
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
   - testspace --version
   - echo $PATH
   - echo $HOME
+  
+script:
+  - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
