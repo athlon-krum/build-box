@@ -23,7 +23,8 @@ script:
   - echo $HOME  
  
 after_script:
-  - testspace test.xml $TS_URL?add#travis.Build.${TRAVIS_BUILD_NUMBER}
+  - printenv > env-vars.txt
+  - testspace env-vars.txt test.xml $TS_URL?add#travis.Build.${TRAVIS_BUILD_NUMBER}
   - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
