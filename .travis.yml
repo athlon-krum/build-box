@@ -16,16 +16,17 @@ env:
 # - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
 
 before_script:
-  - export TS_URL=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
-  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS_URL?start ; fi
+  - export TS_URL=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
+  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS_URL?start#travis.Build.${TRAVIS_BUILD_NUMBER} ; fi
   
-#script:
+script:
+  - echo $HOME  
  
 after_script:
-  - testspace test.xml $TS_URL?add
+  - testspace test.xml $TS_URL?add#travis.Build.${TRAVIS_BUILD_NUMBER}
   - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
       if [ "$BUILD_LEADER" = "YES" ]; then
-          testspace $TS_URL?finish
+          testspace $TS_URL?finish#travis.Build.${TRAVIS_BUILD_NUMBER}
       fi
