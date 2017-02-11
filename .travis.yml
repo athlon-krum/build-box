@@ -16,7 +16,7 @@ env:
 # - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
 
 before_script:
-  - export TS_URL = $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
+  - export TS_URL=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}\#travis.Build.${TRAVIS_BUILD_NUMBER}
   - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS_URL?start ; fi
   
 #script:
