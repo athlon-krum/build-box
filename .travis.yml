@@ -16,8 +16,8 @@ env:
     - TS=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
 
 script:
-  #- export TS=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
-  - testspace $RESULTS $TS?add#$NAME || testspace $RESULTS $TS?start#$NAME
+   - testspace test.xml $TS?add#$NAME/$JOB || testspace test.xml $TS?start#$NAME/$JOB
+ #  - testspace $RESULTS $TS?add#$NAME || testspace $RESULTS $TS?start#$NAME
   
 after_script:
   - printenv 
