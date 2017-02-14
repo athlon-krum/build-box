@@ -6,29 +6,24 @@ install:
   
 env:
   matrix:
-  - JOB=ONE
-  - JOB=TWO
-  - JOB=THREE
-  global:
-    secure: V2oxDG75drbQe//SLSclfLg9HUQ8MLGISZL74sa1YwvA8RJMQpFGLhJ43lDsRWEsfBzbJ4JBAvIuvpCSnx/mZlNZJ+9m2gQREWizXR91474JfgFAMwuOYNSYkeoe51ToZSS5sh45awidIga4wenI3bH+OnC3A9p/BcGMhlJJmxTnxl0gu/VoQkkOPyqjTEjrtbKcEbkzQ6WucV+NjbfVyRshvp0tvItxvNgp6XvKeBxLu+Q1y80BSPZN7Qxk0BWjlAl7k1bdYwln67zTT8H/NakVm328sflcoXJhLtRixUhYON0JBrAFeDYY2hlP2WB8mqRU+dPZVWBhhk5UW2VIgYuK7C1GkOdOtYZDds/wkl5Jro4+I+Gnv4sh6cpT67QPr8hHmI1yOKLQJs2F670b8plzTRbCRJRgARahffJPNxx5cAY36PXS10LroICjRd1aT9pKo9D/AUGkRrTjjr0JZbhIMOiZ2hv8KZhKYSmAQD2MnldY0dPyuHGvli+wO6zBlCKWGXJ7pre2al+lgm8wUxUKSKQog7ItPSxI3pln+xagobm8XDlTSuIKU1t7QzMeRmKOdxL1Bdv2f4YzdmCQ5NT9wU2XXpRq+keH7G6dZ1+gj4vse9YQHdkrlJ5ygSV3ywn8WfDUKfgcz9UwZgHEp8p2mRGfU3YqsOq6ITBgjnM=
-   
-
-#script:
-# - testspace test.xml $TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}.Job.${TRAVIS_JOB_NUMBER}
-
-before_script:
-  - export TS_URL=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
-  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS_URL?start#travis.Build.${TRAVIS_BUILD_NUMBER} ; fi
+    - JOB=ONE   RESULTS=[${JOB}]test.xml
+    - JOB=TWO   RESULTS=[${JOB}]test.xml
+    - JOB=THREE RESULTS=[${JOB}]test.xml
   
+  global:
+    - secure: V2oxDG75drbQe//SLSclfLg9HUQ8MLGISZL74sa1YwvA8RJMQpFGLhJ43lDsRWEsfBzbJ4JBAvIuvpCSnx/mZlNZJ+9m2gQREWizXR91474JfgFAMwuOYNSYkeoe51ToZSS5sh45awidIga4wenI3bH+OnC3A9p/BcGMhlJJmxTnxl0gu/VoQkkOPyqjTEjrtbKcEbkzQ6WucV+NjbfVyRshvp0tvItxvNgp6XvKeBxLu+Q1y80BSPZN7Qxk0BWjlAl7k1bdYwln67zTT8H/NakVm328sflcoXJhLtRixUhYON0JBrAFeDYY2hlP2WB8mqRU+dPZVWBhhk5UW2VIgYuK7C1GkOdOtYZDds/wkl5Jro4+I+Gnv4sh6cpT67QPr8hHmI1yOKLQJs2F670b8plzTRbCRJRgARahffJPNxx5cAY36PXS10LroICjRd1aT9pKo9D/AUGkRrTjjr0JZbhIMOiZ2hv8KZhKYSmAQD2MnldY0dPyuHGvli+wO6zBlCKWGXJ7pre2al+lgm8wUxUKSKQog7ItPSxI3pln+xagobm8XDlTSuIKU1t7QzMeRmKOdxL1Bdv2f4YzdmCQ5NT9wU2XXpRq+keH7G6dZ1+gj4vse9YQHdkrlJ5ygSV3ywn8WfDUKfgcz9UwZgHEp8p2mRGfU3YqsOq6ITBgjnM=
+    - NAME=travis.Build.${TRAVIS_BUILD_NUMBER}
+
 script:
-  - echo $HOME  
- 
+  - export TS=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
+  - testspace $RESULTS $TS?add#$NAME || testspace $RESULTS $TS?start#$NAME
+  
 after_script:
-  - printenv > env-vars.txt
-  - testspace [${JOB}]env-vars.txt [${JOB}]test.xml $TS_URL?add#travis.Build.${TRAVIS_BUILD_NUMBER}
+  - printenv 
   - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
       if [ "$BUILD_LEADER" = "YES" ]; then
-          testspace $TS_URL?finish#travis.Build.${TRAVIS_BUILD_NUMBER}
+          testspace $TS?finish#$NAME
       fi
+
