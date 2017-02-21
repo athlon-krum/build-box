@@ -22,7 +22,7 @@ before_script:
 script:
   - sleep 5 # the build/test being done
   - echo $TRAVIS_EVENT_TYPE
-  - if ["${TRAVIS_EVENT_TYPE"} -eq "pull_requrest"] ; then echo $TRAVIS_PULL_REQUEST_BRANCH ; fi
+  - if ["${TRAVIS_EVENT_TYPE}" -eq "pull_request"] ; then echo $TRAVIS_PULL_REQUEST_BRANCH ; fi
   - testspace $RESULTS $TS?add#$NAME/$JOB
   - testspace $RESULTS $TS2/pr#$NAME/$JOB
  
