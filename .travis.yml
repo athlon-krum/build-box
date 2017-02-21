@@ -14,13 +14,17 @@ env:
     - secure: V2oxDG75drbQe//SLSclfLg9HUQ8MLGISZL74sa1YwvA8RJMQpFGLhJ43lDsRWEsfBzbJ4JBAvIuvpCSnx/mZlNZJ+9m2gQREWizXR91474JfgFAMwuOYNSYkeoe51ToZSS5sh45awidIga4wenI3bH+OnC3A9p/BcGMhlJJmxTnxl0gu/VoQkkOPyqjTEjrtbKcEbkzQ6WucV+NjbfVyRshvp0tvItxvNgp6XvKeBxLu+Q1y80BSPZN7Qxk0BWjlAl7k1bdYwln67zTT8H/NakVm328sflcoXJhLtRixUhYON0JBrAFeDYY2hlP2WB8mqRU+dPZVWBhhk5UW2VIgYuK7C1GkOdOtYZDds/wkl5Jro4+I+Gnv4sh6cpT67QPr8hHmI1yOKLQJs2F670b8plzTRbCRJRgARahffJPNxx5cAY36PXS10LroICjRd1aT9pKo9D/AUGkRrTjjr0JZbhIMOiZ2hv8KZhKYSmAQD2MnldY0dPyuHGvli+wO6zBlCKWGXJ7pre2al+lgm8wUxUKSKQog7ItPSxI3pln+xagobm8XDlTSuIKU1t7QzMeRmKOdxL1Bdv2f4YzdmCQ5NT9wU2XXpRq+keH7G6dZ1+gj4vse9YQHdkrlJ5ygSV3ywn8WfDUKfgcz9UwZgHEp8p2mRGfU3YqsOq6ITBgjnM=
     - NAME=travis.Build.${TRAVIS_BUILD_NUMBER}
     - TS=$TESTSPACE_TOKEN/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}
+    - TS2=$TESTSPACE_TOKEN/munderseth:build-box
 
 before_script:
-  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS?start#$NAME ; fi
+  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS2?start#$NAME ; fi
 
 script:
   - sleep 5 # the build/test being done
+  - echo $TRAVIS_EVENT_TYPE
+  - if ["${TRAVIS_EVENT_TYPE"} -eq "pull_requrest"] ; then echo $TRAVIS_PULL_REQUEST_BRANCH ; fi
   - testspace $RESULTS $TS?add#$NAME/$JOB
+  - testspace $RESULTS $TS2/pr#$NAME/$JOB
  
 after_script:
   - printenv 
