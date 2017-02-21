@@ -17,7 +17,7 @@ env:
     - TS2=$TESTSPACE_TOKEN/munderseth:build-box
 
 before_script:
-  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS2?start#$NAME ; fi
+  - if [ "${TRAVIS_JOB_NUMBER#*.}" -eq "1" ] ; then testspace $TS?start#$NAME ; fi
 
 script:
   - sleep 5 # the build/test being done
