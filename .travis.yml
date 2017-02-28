@@ -6,4 +6,5 @@ addons:
 
 after_script:
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
+  - echo $TESTSPACE_TOKEN
   - testspace test.xml http://sandio:$TESTSPACE_TOKEN@bd443cf7.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
