@@ -5,6 +5,5 @@ addons:
     secure: PPpL1a5xCeImf9Xitu5zM31zuuWCTsfMtd/mlCJ/xY2i4tMpODOd4sn0WTeY6E+GVlVLnW6J0W0+tv6NsL15HD3PEzpoOEPbB9NjvvHmAXCisupFRD2UOrMfaya27/6ubhJLr5U/Nit2O3ALdQzBQk3JjhZI7O05vK2Dbc5Ur8lMqo2d+PB5iibvI322Ga8NHWzlG0TLCYApifnwye/RxY0Xvj8byjexRfGi4JHbVr8VemsnJn2SC4wNu79u05XbWoMDXMA//LsCyuip/ukhjvZSZwoNlwqfktaa06B/1YKp6k5fCN08k2amgSHrIBBdFuAnPSlCw/wN49VT5snQPT6j0x5F4iDfgsF+OtNO7plzt+08gg0QcgGVE/IvvfOpwmcF/uGm2zYZNtu9+h5rVMYnFvyem1QBd1upChSRXZmoHrqZHKuUH+ZAZ5F7x5E7j5QlNvuyY2rrXzYuaa+TYcFPjV1lmoQKJrxzVf2AKRZiCmB1XUldzK6oNH0XR/VfoetTDUVCfT9F1kRd7kPbOdOhSuHdjdCEl53KE78pjupAzFgLUFjAl8lUmz6fH0TtRMDiX0tZlbvQ1DbJOVohuv0woPe003m+aAJSyzVHrvrs/kaY8hnsDNCjwai9X4aqTMdu+Lp9pSZhLUP9Ovqrvr9+ztrdde/OZmuabEf6R5w=
 
 after_script:
-  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar
-  -zxvf- -C /usr/local/bin
+  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
   - testspace test.xml http://sandio:$TESTSPACE_TOKEN@bd443cf7.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
