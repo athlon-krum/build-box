@@ -4,4 +4,4 @@ addons:
     secure: kZcnj5CuAOhM/EUnqVeagfG+MC6oSCI85znaiVQsoOorRl3NCPtCjb4VkxBajc4hVaDLxa9Okhzxh1A9j7QlnxKIVwArj75kIJo4WGSq4RV+OU/YjXdX79u9WmTEhcTVhm6Gc6hJS5BgkgVn4wJkcHCF06Ilbcze3jKZr4AJ/2uSem76DDptWIiH4hd/o/jRXusANHAHL1aRwVa1y5bdSkfTtshkGLaE3HRbFEA4SGXm0dNNUzoESc8v0ceQEf7asUsJbL+w44HONrYgAuRxDCIN/8rQhNQ8iB/HjjMbPvgIay69kNqZdXBY1C72X9EqJ8l4w+JlBKMKItbaelu3fjt52HwEGdaF2QYjUNMGdc7WKW+KCezIuzTp2I7+S9t4jscLpwp7LZ5LXB6agNULhET/ZG2TaVuB3UGYH6FWoSL+o90lrqvPQ5rF12O4cbTO0niBNjt/eVabWwfMnHbq48MEsLu70OVzL1fh5pIV/whko6KHecMkht+TZ3VQV0NoZT7q7JHr1w+DsixckK2yq/4vtcVjALQYHnBnKyVYSgGfxChH5uPczCIfLhzLXNi2xDWgJNAK1sRnGEVgkOUtGIw60WOBdouAQ6xKItWybiYmC0X8TIq8+zRqTzVI08Xury4HFwMfsQTrQtsfWZW/VjL7RzOiHCQF2/1NqIXaYw0=
 after_script:
 - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
-- testspace test.xml http://sandio:$TESTSPACE_TOKEN@bd443cf7.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
+- testspace test.xml http://sandio:$TESTSPACE_TOKEN@a2eea73a.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
