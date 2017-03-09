@@ -1,7 +1,7 @@
 language: cpp
 addons:
   jwt:
-    secure: XAoGPPb6+yMbS/UqWimfOFZQvfyJkkcLqqPu4vx5kgwmU4/Qt9GTl3mwbgXWx9E2yacHYAL6uJrzz0rZN5YyjJLeF1T9/vmZTDzQlRvIsVEDAePOmJc1EICEZrwYja7yyow8+JI62n9+nE3rYVYx69Lvpsv48rZ5BVPCEkXh2jfWK/aRPTquWLN424HdNRC+M+PuEvmH+G2pmDaROjySkcs3xtzJGNhFhWBuNzMcjgQ/02Vst8ZhV7r0TPxbGJLRyygef+yQb/MfOurNsyDYyA6ClMDv3tQNYcPaAaXBTVh/9q1ZlDgK9xZK8WMIP3swviInW5rbnYwnBao4ihXCU29HmimsI1HFgEeykwWm93VL9P1arXa2xBfEpLuY1Ao4vK7lZBO54rtBA053Uile9fGWy2RCNzyU3yWYvQxbZNFpXHa7O6XJdwPsW4Iqwh6u7yLmm82u8kEclvGQEIsXN/bXXb+OuoP3kcY+YKm541PTsig0KOAOG1tkPmCIJPOq0sqZcV4ikApGe5JWuS37LyciSM5Sr2eZprfxBLxDx+LUTm5Sxg0mzIunflMRwu3A+txvOSrHfgjiZ6xOuD0ZQwd9lBAc5mRtUtERd900BChnHXUo9pckiy+GNNgefcGvLO34Fr3aTcBl2Y8tWn62/2W1D1pax0yNH3lU00kM4zM=
+    secure: IjUNzNZXpvpi8Uy4Q83XUzbDx27ye+1XVPlX3M7ucB3nNapYqcRlRs6lCRNUbef3pZx8AAfGoJLEtWVYS0u+TdUbR6EijsIRzhjwsiS9UuTiDzFLoVqP+lctUdt8ZUWESgD02itB9mulFCT8EB2WCAgHPJHzuYsd0c/Xyl2WrH5NQSc9dCUuc+KqeLHZcWSeduibVEptvtrcte0HLWGrOlrNG0aZePfA3l+voEd0ECG+M6KafGR4/OLvxbnNQhmsm8i8Yk8Eni5UdaPwu0g48BDBKN6MYsmWK7De3Dp53WiM8Go9vEEBK0aUgqu1Nw43N045Ld1f9A1u8ptaSeFQeVqaJwlbT3hEFj/wpaS7IZedFt7Z05pweJVq7n/nmmf8UEmip0dSsk+udAT7lP4Vh08BGRrh0UePH/O6LplNCPN9w9ZcuXhRr1nzgOYk6wu7S9sNZCyOpn3l4aaYOP+MSl2DBacOVWv53BhRQI7pqXDtvmCByA+Khg+VQKsBZy+dIjsK7ZPQM8ELyt9IN8CDlGtz/MpwUDtxQHyBVo6xXp+wk34RmR/s3SOSCw5wsGn7gvJHtIj8Ji7xs/eFkdZLnvTlTUj2gPbCYVDk6/FlW0kJhu9Ch1hT3v5bKXJpHs5eGCSi9PMOgdJHqfPT9QZx/FDswYE8lwtMYgblktteZwE=
 after_script:
-- curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
-- testspace test.xml http://sandio:$TESTSPACE_TOKEN@a2eea73a.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
+  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | sudo tar -zxvf- -C /usr/local/bin
+  - testspace test.xml http://sandio:$SAUCE_ACCESS_KEY@fdb74eba.ngrok.io/${TRAVIS_REPO_SLUG/\//:}/${TRAVIS_BRANCH}#travis.Build.${TRAVIS_BUILD_NUMBER}
